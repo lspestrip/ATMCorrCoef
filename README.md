@@ -1,4 +1,4 @@
-#ATMCorrCoef#
+# ATMCorrCoef
 
 CMB ground-based experiments must deal with atmospheric fluctuations that introduces spatial and temporal correlations between detected signal. 
 
