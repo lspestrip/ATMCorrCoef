@@ -81,7 +81,7 @@ for t = Step_start:Step_stop
     if t*dt % 10 == 0
         global el -= 2*θᵦ
     end
-    println(el, " ", Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt))
+    #println(el, " ", Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt))
     append!(el_arr, el)
     append!(az_arr, Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt))
 end
@@ -91,4 +91,4 @@ time_s = time_s[ord]
 Coo  = Coo[ord]
 
 
-#plot(time_s, Coo/findmax(Coo)[1], seriestype=:scatter, ylims=(0,1.1), title="Test", xlabel = "Time [seconds]", ylabel="Autocorrelation Level [Normalized Units]", m=(1, :circle, 1), bg=RGB(1,1,1))#, yerr=(std_err ./ findmax(Coo)[1]))
+plot(time_s, Coo/findmax(Coo)[1], seriestype=:scatter, ylims=(0,1.1), title="Test", xlabel = "Time [seconds]", ylabel="Autocorrelation Level [Normalized Units]", m=(1, :circle, 1), bg=RGB(1,1,1))#, yerr=(std_err ./ findmax(Coo)[1]))
