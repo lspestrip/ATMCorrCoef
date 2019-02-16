@@ -32,13 +32,16 @@ y_c = [i.y/2000 for i in punti_cir ]
 
 @gif for i = 1:length(az_arr)
 
-    p1 = plot([az_arr[i],az_arr[i]], [0,1], proj=:polar, arrow=arrow(), yaxis=nothing, label="Telescope line of sight"  )
-    p1 = plot!([ (π/2) - (π/(7.0)) + π, (π/2) + (π/(7.0)) + π ], [1, 0], proj=:polar, arrow=arrow(), label="Wind direction" )
+    p1 = plot([az_arr[i],az_arr[i]], [0,1], proj=:polar, linewidth = 4, arrow=arrow(), yaxis=nothing, label="Telescope line of sight"  )
+    p1 = plot!([ (π/2) - Wind_direction + π, (π/2) + Wind_direction + π ], [1, 0], proj=:polar, linewidth = 4, arrow=arrow(), label="Wind direction" )
 
     append!(time_arr, time_s[i])
     append!(Coo_arr, Coo[i]/findmax(Coo)[1])
 
-    p2 = plot(time_arr, Coo_arr, xlims=(0,35), ylims=(0,1.2), arrow=arrow(),  ylabel="Autocorrelation C_00^0t [normalized unit]", xlabel="time [s]")
-    plot(p1,p2, layout =(1,2), size=(1024,768))
+    p2 = plot(time_arr, Coo_arr, xlims=(0,35), ylims=(0,1.2), ylabel="Autocorrelation [normalized unit]", xlabel="time [s]")
+    p2 = plot!(time_arr, Coo_arr, seriestype=:scatter)
+
+
+    plot(p1, p2, layout =grid(1,2, width=[0.1,0.9]), size=(1366,768))
 
 end every 1
