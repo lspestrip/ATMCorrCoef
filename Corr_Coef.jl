@@ -17,8 +17,8 @@ calls = Int64(1E3)
 it    = 5
 dimensions = 6.
 
-Δₐ = 0.8
-ss = 0.068 #0.02 rad  / sec
+Δₐ = 0.4
+ss = 0.02 #0.02 rad  / sec
 
 fₛ = ss / Δₐ
 
@@ -28,7 +28,7 @@ vₛ = 2*π / 60.   # speed rad/sec
 dt = 0.6         # Time interval
 
 Start_Time = 0   #parse(Float64, ARGS[1])
-Stop_Time  = 600 #parse(Float64, ARGS[2])
+Stop_Time  = 400 #parse(Float64, ARGS[2])
 file_name  = "ciao.txt" #ARGS[3]
 
 Step_start = Start_Time / dt
@@ -41,7 +41,7 @@ std_err = Array{Float64,1}(undef, 0)
 el_arr = Array{Float64,1}(undef, 0)
 az_arr = Array{Float64,1}(undef, 0)
 
-el = π/(3)
+el = π/(4)
 
 # Raster scan
 # xu = Point{Float64}(4000.0,  π/(4.5) + θᵦ, Φₛ + θᵦ, undef, undef, undef)

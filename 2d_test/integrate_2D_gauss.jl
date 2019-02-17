@@ -53,6 +53,7 @@ function Integrate(fun::Function, xl::Point{Float64}, xu::Point{Float64}, cal::I
 	f = [ fun(point) * (xu.x-xl.x) * (xu.y-xl.y) * density_unif  for point in p ]
 	f_abs = abs.(f)
 
+
 	Integral      = sum(f)
 	Integral_abs  = sum(f_abs)
 
@@ -86,7 +87,7 @@ function Integrate(fun::Function, xl::Point{Float64}, xu::Point{Float64}, cal::I
 	Box_Y = Array{Float64}(undef, 0)
 
 
-	for iter = 1:20
+	for iter = 1:1
 
 		#; Organizzo la pdf nel BOX
 		for idx_g = 1:length(g)
@@ -203,7 +204,7 @@ end
 
 #################### Integration #####################
 
-calls = 100000
+calls = 20000
 
 xu = Point{Float64}(1., 1.)
 xl = Point{Float64}(-1.,-1.)
@@ -211,7 +212,7 @@ xl = Point{Float64}(-1.,-1.)
 
 
 result,x,y = Integrate(cilindro, xl, xu, calls)
-plot(x,y, seriestype=:scatter)
+plot(x,y, seriestype=:scatter, xlims=(-2,2), ylims=(-2,2), label="", xlabel="X", ylabel="Y")
 
 #println("Valore dell'integrale = ", result)
 

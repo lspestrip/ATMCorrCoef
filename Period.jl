@@ -15,8 +15,8 @@ import Base.-
 # include("Corr_Coef.jl")
 
 
-per=Periodograms.periodogram(Coo, fs=1/dt, window=bartlett )
+per=Periodograms.periodogram(Coo, fs=1/dt, window=hamming)
 pow = power(per)
 freqq = freq(per)
 
-plot!(freqq, pow/findmax(pow)[1], xlims=(0,0.5), yscale=:log10)
+plot(freqq, pow/findmax(pow)[1], xlims=(0,0.8), yscale=:log10, label="dir = 90 deg; W = 4")

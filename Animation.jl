@@ -29,17 +29,18 @@ punti_cir = [Point{Float64}(2500, π/4., i, undef, undef, undef)() for i in phi_
 x_c = [i.x/2000 for i in punti_cir ]
 y_c = [i.y/2000 for i in punti_cir ]
 
+Plots.font("Helvetica", 19)
 
 @gif for i = 1:length(az_arr)
 
-    p1 = plot([az_arr[i],az_arr[i]], [0,1], proj=:polar, linewidth = 4, arrow=arrow(), yaxis=nothing, label="Telescope line of sight"  )
-    p1 = plot!([ (π/2) - Wind_direction + π, (π/2) + Wind_direction + π ], [1, 0], proj=:polar, linewidth = 4, arrow=arrow(), label="Wind direction" )
+    p1 = plot([az_arr[i],az_arr[i]], [0,1], proj=:polar, linewidth = 4, arrow=arrow(), yaxis=nothing, label="Line of sight", legend=:bottomright  )
+    p1 = plot!([ (π/2) - Wind_direction + π, (π/2) + Wind_direction + π ], [1, 0], proj=:polar, linewidth = 4, arrow=arrow(), label="Wind direction", legend=:bottomright )
 
     append!(time_arr, time_s[i])
     append!(Coo_arr, Coo[i]/findmax(Coo)[1])
 
-    p2 = plot(time_arr, Coo_arr, xlims=(0,35), ylims=(0,1.2), ylabel="Autocorrelation [normalized unit]", xlabel="time [s]")
-    p2 = plot!(time_arr, Coo_arr, seriestype=:scatter)
+    p2 = plot(time_arr, Coo_arr, xlims=(0,35), ylims=(0,1.2), ylabel="Autocorrelation [normalized unit]", xlabel="time [s]", label="")
+    p2 = plot!(time_arr, Coo_arr, seriestype=:scatter, label="")
 
 
     plot(p1, p2, layout =grid(1,2, width=[0.1,0.9]), size=(1366,768))
