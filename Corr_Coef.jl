@@ -13,7 +13,7 @@ include("integrate.jl")
 
 #################### Integration #####################
 
-calls = Int64(1E3)
+calls = Int64(2E3)
 it    = 5
 dimensions = 6.
 
@@ -25,10 +25,10 @@ fₛ = ss / Δₐ
 
 Φₛ = π/2         # start point
 vₛ = 2*π / 60.   # speed rad/sec
-dt = 0.6         # Time interval
+dt = 2         # Time interval
 
 Start_Time = 0   #parse(Float64, ARGS[1])
-Stop_Time  = 400 #parse(Float64, ARGS[2])
+Stop_Time  = 500 #parse(Float64, ARGS[2])
 file_name  = "ciao.txt" #ARGS[3]
 
 Step_start = Start_Time / dt
@@ -41,14 +41,14 @@ std_err = Array{Float64,1}(undef, 0)
 el_arr = Array{Float64,1}(undef, 0)
 az_arr = Array{Float64,1}(undef, 0)
 
-el = π/(4)
+el = π/(2.5)
 
 # Raster scan
 # xu = Point{Float64}(4000.0,  π/(4.5) + θᵦ, Φₛ + θᵦ, undef, undef, undef)
 # xl = Point{Float64}(0.,      π/(4.5) - θᵦ,  Φₛ - θᵦ, undef, undef, undef )
 
-xu = Point{Float64}(4000.0,  el + θᵦ, Φₛ + θᵦ, undef, undef, undef)
-xl = Point{Float64}(00.,     el - θᵦ, Φₛ - θᵦ, undef, undef, undef)
+xu = Point{Float64}(40000.0,  el + θᵦ, Φₛ + θᵦ, undef, undef, undef)
+xl = Point{Float64}(0.,     el - θᵦ, Φₛ - θᵦ, undef, undef, undef)
 
 start = Dates.value(Dates.now())
 
@@ -57,11 +57,9 @@ start = Dates.value(Dates.now())
 
 for t = Step_start:Step_stop
     tempo = Float64(t*dt)
-    # xu = Point{Float64}(2000.0,  el + θᵦ, Φₛ + θᵦ, undef, undef, undef)
-    # xl = Point{Float64}(00.,     el - θᵦ, Φₛ - θᵦ, undef, undef, undef)
     # Rivedere gli estremi di integrazione.
-    # xu_p = Point{Float64}(5035.,   2.8902652413026098,  (Φₛ + vₛ*t*dt) + θᵦ, undef, undef, undef)
-    # xl_p = Point{Float64}(0.,     0.12566370614359174,  (Φₛ + vₛ*t*dt) - θᵦ , undef, undef ,undef)
+    # xu_p = Point{Float64}(40000., el + θᵦ,  (Φₛ + vₛ*t*dt) + θᵦ, undef, undef, undef)
+    # xl_p = Point{Float64}(0.,    el - θᵦ,  (Φₛ + vₛ*t*dt) - θᵦ , undef, undef ,undef)
 
     # Raster scan
     # xu_p = Point{Float64}(4000.,   π/(4.5) + θᵦ,  (Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt)) + θᵦ, undef, undef, undef)
@@ -78,12 +76,12 @@ for t = Step_start:Step_stop
     append!(Coo, result)
     append!(std_err,error)
 
-    if t*dt % 10 == 0
-        global el -= 2*θᵦ
-    end
-    #println(el, " ", Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt))
-    append!(el_arr, el)
-    append!(az_arr, Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt))
+    # if t*dt % 10 == 0
+    #     global el -= 2*θᵦ
+    # end
+    # #println(el, " ", Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt))
+    # append!(el_arr, el)
+    # append!(az_arr, Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt))
 end
 
 ord = sortperm(time_s)
@@ -92,6 +90,6 @@ Coo  = Coo[ord]
 
 # Plots.font("Helvetica", 21)
 # #Plots.scalefontsizes(2)
-# plot_fig=plot(time_s, (Coo/findmax(Coo)[1]), seriestype=:scatter, ylims=(0,1), title="", xlabel = "Time [seconds]", ylabel="Correlation Level [Normalized Units]", m=(1, :circle, 2), bg=RGB(1,1,1), size=(600,600), label="")#, yerr=(std_err ./ findmax(Coo)[1]), label="")
-# plot_fig=plot!(time_s, (Coo/findmax(Coo)[1]), label="")
-# #savefig("Graph/Dir_0_W_59.png")
+plot_fig=plot(time_s,  Coo/(findmax(Coo)[1]), seriestype=:scatter, ylims=(0,1), title="", xlabel = "Time [seconds]", ylabel="Correlation Level [Normalized Units]", m=(1, :circle, 2), bg=RGB(1,1,1), size=(600,600), label="")#, yerr=std_err)
+plot_fig=plot!(time_s, Coo/(findmax(Coo)[1]), label="")
+# savefig("Graph/STRIP2_0_3.png")

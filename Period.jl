@@ -19,4 +19,4 @@ per=Periodograms.periodogram(Coo, fs=1/dt, window=hamming)
 pow = power(per)
 freqq = freq(per)
 
-plot(freqq, pow/findmax(pow)[1], xlims=(0,0.8), yscale=:log10, label="dir = 90 deg; W = 4")
+plot(freqq .* 60, pow/(0.1*findmax(pow)[1]), xlims=(0,5), ylims=(0,0.02), label="Raster - dir = 0 deg; W = 3 m/s", xlabel="Freq[Hz] / fs")
