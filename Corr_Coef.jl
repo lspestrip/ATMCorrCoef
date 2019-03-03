@@ -13,22 +13,23 @@ include("integrate.jl")
 
 #################### Integration #####################
 
-calls = Int64(2E3)
+calls = Int64(6E3)
 it    = 5
 dimensions = 6.
 
-Δₐ = 0.4
-ss = 0.02 #0.02 rad  / sec
+#Δₐ = 0.959931088596881  # for 55 deg raster
+Δₐ = 0.35  # for 20 deg raster
+ss = 0.013 # 0.02 rad  / sec
 
 fₛ = ss / Δₐ
 
 
 Φₛ = π/2         # start point
 vₛ = 2*π / 60.   # speed rad/sec
-dt = 2         # Time interval
+dt = 0.3         # Time interval
 
 Start_Time = 0   #parse(Float64, ARGS[1])
-Stop_Time  = 500 #parse(Float64, ARGS[2])
+Stop_Time  = 30 #parse(Float64, ARGS[2])
 file_name  = "ciao.txt" #ARGS[3]
 
 Step_start = Start_Time / dt
@@ -48,7 +49,7 @@ el = π/(2.5)
 # xl = Point{Float64}(0.,      π/(4.5) - θᵦ,  Φₛ - θᵦ, undef, undef, undef )
 
 xu = Point{Float64}(40000.0,  el + θᵦ, Φₛ + θᵦ, undef, undef, undef)
-xl = Point{Float64}(0.,     el - θᵦ, Φₛ - θᵦ, undef, undef, undef)
+xl = Point{Float64}(0.0,     el - θᵦ, Φₛ - θᵦ, undef, undef, undef)
 
 start = Dates.value(Dates.now())
 
@@ -65,8 +66,8 @@ for t = Step_start:Step_stop
     # xu_p = Point{Float64}(4000.,   π/(4.5) + θᵦ,  (Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt)) + θᵦ, undef, undef, undef)
     # xl_p = Point{Float64}(0.,      π/(4.5) - θᵦ,  (Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt)) - θᵦ , undef, undef ,undef)
 
-    xu_p = Point{Float64}(4000.,   el + θᵦ,  (Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt)) + θᵦ, undef, undef, undef)
-    xl_p = Point{Float64}(0.,      el - θᵦ,  (Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt)) - θᵦ, undef, undef ,undef)
+    xu_p = Point{Float64}(40000.0,   el + θᵦ,  (Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt)) + θᵦ, undef, undef, undef)
+    xl_p = Point{Float64}(0.0,      el - θᵦ,  (Φₛ + (Δₐ/2)*sin(2*π*fₛ*t*dt)) - θᵦ, undef, undef ,undef)
 
     result, chi_square = Integrate(corr, xl, xu, xl_p, xu_p, calls, it, dimensions, tempo )
     error = (chi_square/(it+1))^0.5

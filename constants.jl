@@ -7,8 +7,8 @@ const χ₁_0 = 1 # in m^{-2}
 const χ₂_0 = 1 # in m^{-2}
 const z_0  = 1E4 # the quote where water vapor vanish
 const L₀   = 450 # in m, the turbulance correlation length
-const Wind_direction = 0*((π/2))
-const Wind_Intensity = 3#45  #m/s
+const Wind_direction = 1*((π/2))
+const Wind_Intensity = 45#45  #m/s
 
 
 
